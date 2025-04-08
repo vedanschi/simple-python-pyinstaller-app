@@ -1,5 +1,5 @@
 pipeline {
-    agent {label 'python'} 
+    agent { label 'python' } 
     stages {
         stage('Build') {
             steps {
@@ -19,8 +19,11 @@ pipeline {
         }
         stage('Deliver') { 
             steps {
+                // Install pyinstaller in the venv
+                sh './venv/bin/pip install pyinstaller'
+                
+                // Package the script
                 sh './venv/bin/pyinstaller --onefile sources/add2vals.py'
-
             }
             post {
                 success {
